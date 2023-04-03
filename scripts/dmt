@@ -1,0 +1,56 @@
+#!/bin/bash
+# dmt is an acronym for distrotunnel management tool
+
+noconfirm=""
+if [[ "$1" == "--noconfirm" ]]; then
+    noconfirm="--noconfirm"
+    shift
+fi
+
+case "$1" in
+    -a)
+        shift
+        for pkg in "$@"; do
+            if yay -S $noconfirm $pkg; then
+                returned_which=$(which $pkg | head -n 1)
+                if distrobox-export -b $returned_which -ep $DISTROTUNNEL/bin; then
+                    distrobox-export --app $pkg > /dev/null 2>&1;
+                    echo "Package $pkg installed and exported successfully."
+                else
+                    echo "Error exporting package $pkg."
+                fi
+            else
+                echo "Error installing package $pkg."
+            fi
+        done
+        ;;
+    -r)
+        shift
+        for pkg in "$@"; do
+            distrobox-export --app $pkg --delete;
+            if yay -R $noconfirm $pkg; then
+                rm -rf $DISTROTUNNEL/bin/$pkg
+                echo "Package $pkg uninstalled successfully."
+            else
+                echo "Error uninstalling package $pkg."
+            fi
+        done
+        ;;
+    -u)
+        if yay -Syu $noconfirm; then
+            echo "Packages updated successfully."
+        fi
+        ;;
+    -h)
+        echo "cmt is an acronym for container management tool"
+        echo "Usage:"
+        echo "--noconfirm... # Avoid interactions with user"
+        echo "-a <package>... # Add packages"
+        echo "-r <package>... # Remove packages"
+        echo "-u # Update packages"
+        echo "-h # Show help"
+        ;;
+    *)
+        echo "Invalid option, run cmt -h for help."
+        ;;
+esac

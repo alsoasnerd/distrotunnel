@@ -1,0 +1,6 @@
+#!/bin/bash
+
+distrobox-rm distrotunnel --force
+podman image rm localhost/distrotunnel:latest
+rm -rf ~/.local/share/applications/distrotunnel-*.desktop
+echo "Distrotunnel uninstalled!"

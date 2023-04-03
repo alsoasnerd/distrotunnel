@@ -1,0 +1,33 @@
+#!/bin/bash
+
+$DISTROTUNNEL/scripts/dmt --noconfirm -a \
+        atuin \
+        bat \
+        chezmoi \
+        curl \
+        dust \
+        exa \
+        fd \
+        fzf \
+        gitflow-avh \
+        htop \
+        flameshot \
+        taskwarrior-tui \
+        timew \
+        firefox-developer-edition \
+        neovim \
+        openssh \
+        ripgrep \
+        starship \
+        neofetch \
+        tmux \
+        tmuxp \
+        xclip \
+        yarn \
+        ; sudo pacman -Rns $(pacman -Qtdq) \
+        ; sudo pacman -Scc --noconfirm \
+        ; sudo rm -Rf /var/cache/pacman/pkg/*.
+
+distrobox-export -b $(which git | head -n 1) -ep $DISTROTUNNEL/bin
+distrobox-export -b $DISTROTUNNEL/scripts/dmt -ep $DISTROTUNNEL/bin 
+distrobox-export -b $DISTROTUNNEL/scripts/won -ep $DISTROTUNNEL/bin 

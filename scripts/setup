@@ -1,0 +1,5 @@
+#!/bin/bash
+
+podman build -t distrotunnel $DISTROTUNNEL
+distrobox create -i localhost/distrotunnel --name distrotunnel
+distrobox enter distrotunnel -- $DISTROTUNNEL/scripts/install
