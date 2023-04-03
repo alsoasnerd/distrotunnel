@@ -12,13 +12,12 @@ case "$1" in
         shift
         for pkg in "$@"; do
             if yay -S $noconfirm $pkg; then
-                returned_which=$(which $pkg | head -n 1)
-                if distrobox-export -b $returned_which -ep $DISTROTUNNEL/bin; then
-                    distrobox-export --app $pkg > /dev/null 2>&1;
-                    echo "Package $pkg installed and exported successfully."
-                else
-                    echo "Error exporting package $pkg."
+                yay -Ql $pkg | grep /usr/bin/ | tail -n +2 | awk '{print $2}' | while read line; do
+                if distrobox-export -b $line -ep $DISTROTUNNEL/bin; then
+                    distrobox-export --app $line > /dev/null 2>&1;
                 fi
+            done
+                echo "Package $pkg installed and exported successfully."
             else
                 echo "Error installing package $pkg."
             fi
@@ -27,9 +26,11 @@ case "$1" in
     -r)
         shift
         for pkg in "$@"; do
-            distrobox-export --app $pkg --delete;
+            yay -Ql $pkg | grep /usr/bin/ | tail -n +2 | awk '{print $2}' | while read line; do
+            distrobox-export --app $line --delete;
+            rm -rf $DISTROTUNNEL/bin/$line
+        done
             if yay -R $noconfirm $pkg; then
-                rm -rf $DISTROTUNNEL/bin/$pkg
                 echo "Package $pkg uninstalled successfully."
             else
                 echo "Error uninstalling package $pkg."
