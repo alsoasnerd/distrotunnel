@@ -12,9 +12,10 @@ case "$1" in
         shift
         for pkg in "$@"; do
             if yay -S $noconfirm $pkg; then
-                yay -Ql $pkg | grep /usr/bin/ | tail -n +2 | awk '{print $2}' | while read line; do
-                if distrobox-export -b $line -ep $DISTROTUNNEL/bin; then
-                    distrobox-export --app $line > /dev/null 2>&1;
+                yay -Ql $pkg | grep /usr/bin/ | tail -n +2 | awk '{print $2}' | while read path; do
+                if distrobox-export -b $path -ep $DISTROTUNNEL/bin; then
+                    execname=$(basename $path)
+                    distrobox-export --app $execname > /dev/null 2>&1;
                 fi
             done
                 echo "Package $pkg installed and exported successfully."
@@ -26,9 +27,10 @@ case "$1" in
     -r)
         shift
         for pkg in "$@"; do
-            yay -Ql $pkg | grep /usr/bin/ | tail -n +2 | awk '{print $2}' | while read line; do
-            distrobox-export --app $line --delete;
-            rm -rf $DISTROTUNNEL/bin/$line
+            yay -Ql $pkg | grep /usr/bin/ | tail -n +2 | awk '{print $2}' | while read path; do
+            execname=$(basename $path)
+            distrobox-export --app $execname --delete;
+            rm -rf $DISTROTUNNEL/bin/$execname
         done
             if yay -R $noconfirm $pkg; then
                 echo "Package $pkg uninstalled successfully."
