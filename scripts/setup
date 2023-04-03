@@ -1,5 +1,18 @@
 #!/bin/bash
 
+if [ -z "$DISTROTUNNEL" ]
+then
+    read -p "Set DISTROTUNNEL path: " path
+
+    if [ -z "$path" ]
+    then
+        path=~/.local/share/distrobox/distrotunnel
+    fi
+
+    echo "export DISTROTUNNEL=$path" >> ~/.zshrc
+    source ~/.zshrc
+fi
+
 podman build -t distrotunnel $DISTROTUNNEL
 distrobox create -i localhost/distrotunnel --name distrotunnel
 
