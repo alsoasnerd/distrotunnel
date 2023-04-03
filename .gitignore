@@ -1,0 +1,2 @@
+# Ignore distrobox binary export directory
+bin/

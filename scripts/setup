@@ -2,4 +2,6 @@
 
 podman build -t distrotunnel $DISTROTUNNEL
 distrobox create -i localhost/distrotunnel --name distrotunnel
+
+mkdir $DISTROTUNNEL/bin
 distrobox enter distrotunnel -- $DISTROTUNNEL/scripts/install
