@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ -z "$DISTROTUNNEL" ]
+then
+    read -p "Set DISTROTUNNEL path: " path
+
+    if [ -z "$path" ]
+    then
+        path=~/.local/share/distrobox/distrotunnel
+    fi
+
+    echo "export DISTROTUNNEL=$path" >> ~/.zshrc
+    echo "export PATH=$DISTROTUNNEL/bin:$PATH" >> ~/.zshrc
+    echo "alias distrotunnel='distrobox enter distrotunnel'" >> ~/.zshrc
+    echo "alias distrotunnel_setup=$DISTROTUNNEL/scripts/setup" >> ~/.zshrc
+    echo "alias distrotunnel_unsetup=$DISTROTUNNEL/scripts/unsetup" >> ~/.zshrc
+
+    source ~/.zshrc
+fi
+
+mkdir -p $DISTROTUNNEL
+git clone https://github.com/DevAles/distrotunnel $DISTROTUNNEL
+$DISTROTUNNEL/scripts/setup
