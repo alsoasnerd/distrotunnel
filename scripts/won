@@ -7,8 +7,6 @@ else
     selected=$(find ~/projects -mindepth 1 -maxdepth 2 -type d -not -path "*/.*" | fzf)
 fi
 
-if [[ -z $selected ]]; then
-    exit 0
+if [[ -n $selected ]]; then
+    nvim "$selected"
 fi
-
-nvim "$selected"
