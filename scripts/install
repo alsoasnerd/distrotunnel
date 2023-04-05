@@ -1,11 +1,13 @@
 #!/bin/bash
 
+# install AUR/pacman packages
 $DISTROTUNNEL/scripts/dmt --noconfirm -a \
         atuin \
         bat \
         chezmoi \
         curl \
         dust \
+        github-cli \
         exa \
         fd \
         fzf \
@@ -28,6 +30,24 @@ $DISTROTUNNEL/scripts/dmt --noconfirm -a \
         ; sudo pacman -Scc --noconfirm \
         ; sudo rm -Rf /var/cache/pacman/pkg/*.
 
-distrobox-export -b $(which git | head -n 1) -ep $DISTROTUNNEL/bin
+# install zsh-syntax-highlighting
+mkdir -p ~/.zsh
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
+
+# Uncomment the following line if your .zshrc not already have it
+# echo "source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+
+# install gh autocomplete
+gh completion -s zsh > ~/.zsh/_gh
+
+# export some packages then cannot have been installed via dmt
+yay -Ql sudo | grep /usr/bin/ | tail -n +2 | awk '{print $2}' | while read path; do
+    distrobox-export -b $path -ep $DISTROTUNNEL/bin;
+done
+
+yay -Ql git | grep /usr/bin/ | tail -n +2 | awk '{print $2}' | while read path; do
+    distrobox-export -b $path -ep $DISTROTUNNEL/bin;
+done
+
 distrobox-export -b $DISTROTUNNEL/scripts/dmt -ep $DISTROTUNNEL/bin 
 distrobox-export -b $DISTROTUNNEL/scripts/won -ep $DISTROTUNNEL/bin 
