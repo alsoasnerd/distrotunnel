@@ -1,7 +1,11 @@
 #!/bin/bash
 
+# install dmt
+git submodule update --init --recursive $DISTROTUNNEL
+cargo build --manifest-path $DISTROTUNNEL/scripts/dmt/Cargo.toml --release
+
 # install AUR/pacman packages
-$DISTROTUNNEL/scripts/dmt --noconfirm -a \
+$DISTROTUNNEL/scripts/dmt/target/release/dmt -a \
         atuin \
         bat \
         chezmoi \
@@ -49,5 +53,5 @@ yay -Ql git | grep /usr/bin/ | tail -n +2 | awk '{print $2}' | while read path; 
     distrobox-export -b $path -ep $DISTROTUNNEL/bin;
 done
 
-distrobox-export -b $DISTROTUNNEL/scripts/dmt -ep $DISTROTUNNEL/bin 
+distrobox-export -b $DISTROTUNNEL/scripts/dmt/target/release/dmt -ep $DISTROTUNNEL/bin 
 distrobox-export -b $DISTROTUNNEL/scripts/won -ep $DISTROTUNNEL/bin 
