@@ -49,5 +49,7 @@ yay -Ql git | grep /usr/bin/ | tail -n +2 | awk '{print $2}' | while read path; 
     distrobox-export -b $path -ep $DISTROTUNNEL/bin;
 done
 
-distrobox-export -b $DISTROTUNNEL/scripts/dmt -ep $DISTROTUNNEL/bin 
+cargo build --manifest-path $DISTROTUNNEL/scripts/dmt/Cargo.toml --release
+
+distrobox-export -b $DISTROTUNNEL/scripts/dmt/target/release/dmt -ep $DISTROTUNNEL/bin 
 distrobox-export -b $DISTROTUNNEL/scripts/won -ep $DISTROTUNNEL/bin 
