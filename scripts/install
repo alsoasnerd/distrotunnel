@@ -5,7 +5,7 @@ git submodule update --init --recursive $DISTROTUNNEL
 cargo build --manifest-path $DISTROTUNNEL/scripts/dmt/Cargo.toml --release
 
 # install AUR/pacman packages
-$DISTROTUNNEL/scripts/dmt/target/release/dmt --noconfirm -a \
+$DISTROTUNNEL/scripts/dmt/target/release/dmt -a \
         atuin \
         bat \
         chezmoi \
