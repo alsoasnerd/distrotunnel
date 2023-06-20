@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # install dmt
-git submodule update --init --recursive $DISTROTUNNEL
+git submodule update --init --recursive --remote $DISTROTUNNEL/scripts/dmt
 cargo build --manifest-path $DISTROTUNNEL/scripts/dmt/Cargo.toml --release
 
 # install AUR/pacman packages
 $DISTROTUNNEL/scripts/dmt/target/release/dmt -a \
         atuin \
         bat \
+        bash-completion \
         chezmoi \
         curl \
         dust \
