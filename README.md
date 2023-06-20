@@ -15,7 +15,7 @@ sudo pacman -S git podman distrobox
 Add a DISTROTUNNEL variable in your shell with the path then you desires and
 put in your file path. (for example, in bashrc or zshrc):
 
-### !! WARNING !! NOT SET DISTROTUNNEL VARIABLE TO A ROOT FOLDER
+### !! WARNING !! DON'T SET DISTROTUNNEL VARIABLE TO A ROOT FOLDER
 
 ```bash
 export DISTROTUNNEL=/your/custom/path # for example, i use in ~/.local/share/distrobox/distrotunnel
