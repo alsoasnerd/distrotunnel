@@ -1,3 +1,4 @@
 [submodule "scripts/dmt"]
 	path = scripts/dmt
-	url = https://github.com/DevAles/dmt
+	url = https://github.com/DevAles/dmt.git
+	branch = develop
