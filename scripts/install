@@ -3,6 +3,10 @@
 # Install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
+# Add rust to path
+echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+
 # install dmt
 git submodule update --init --recursive --remote $DISTROTUNNEL/scripts/dmt
 cargo build --manifest-path $DISTROTUNNEL/scripts/dmt/Cargo.toml --release

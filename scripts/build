@@ -1,5 +1,16 @@
 #!/bin/bash
 
+if [ -z "$DISTROTUNNEL_USERNAME" ]
+then
+    read -p "Set DISTROTUNNEL_USERNAME: " username
+
+    if [ -z "$username" ]
+    then
+        echo "DISTROTUNNEL_USERNAME is required"
+        exit 1
+    fi
+fi
+
 if [ -z "$DISTROTUNNEL" ]
 then
     read -p "Set DISTROTUNNEL path: " path
@@ -9,15 +20,28 @@ then
         path=~/.local/share/distrobox/distrotunnel
     fi
 
-    echo "export DISTROTUNNEL=$path" >> ~/.zshrc
-    echo "export PATH=$DISTROTUNNEL/bin:$PATH" >> ~/.zshrc
-    echo "alias distrotunnel='distrobox enter distrotunnel'" >> ~/.zshrc
-    echo "alias distrotunnel_setup=$DISTROTUNNEL/scripts/setup" >> ~/.zshrc
-    echo "alias distrotunnel_unsetup=$DISTROTUNNEL/scripts/unsetup" >> ~/.zshrc
-
-    source ~/.zshrc
+    echo "source $path/distrotunnel.zsh" >> ~/.zshrc
 fi
 
+export_distrotunnel="export DISTROTUNNEL=$path"
+
+$export_distrotunnel
 mkdir -p $DISTROTUNNEL
-git clone https://github.com/DevAles/distrotunnel $DISTROTUNNEL
+
+# verify if DISTROTUNNEL_UNSTABLE is set to true
+clone_command="git clone https://github.com/$username/distrotunnel "
+
+if [ -z "$DISTROTUNNEL_UNSTABLE" ]
+then
+    $clone_command -b develop --recursive $DISTROTUNNEL
+else
+    $clone_command --recursive $DISTROTUNNEL
+fi
+
+echo "$export_distrotunnel" >> $path/distrotunnel.zsh
+echo "export PATH=$DISTROTUNNEL/bin:$PATH" >> $path/distrotunnel.zsh
+echo "alias distrotunnel='distrobox enter distrotunnel'" >> $path/distrotunnel.zsh
+echo "alias distrotunnel_setup=$DISTROTUNNEL/scripts/setup" >> $path/distrotunnel.zsh
+echo "alias distrotunnel_unsetup=$DISTROTUNNEL/scripts/unsetup" >> $path/distrotunnel.zsh
+
 $DISTROTUNNEL/scripts/setup
