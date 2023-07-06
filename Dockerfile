@@ -1,7 +1,7 @@
 FROM archlinux:latest
 
-# Update the system and install necessary dependencies
-RUN pacman -Syu --noconfirm base-devel git sudo go
+# Update the system and install base-devel, git, sudo and go
+RUN pacman -Syu --noconfirm base-devel git sudo go 
 
 # Create a new non-root user
 RUN useradd -m builduser
@@ -23,3 +23,4 @@ RUN pacman -U --noconfirm /home/builduser/yay/*.pkg.tar.zst
 
 # Delete the builduser user
 RUN userdel -r builduser
+
