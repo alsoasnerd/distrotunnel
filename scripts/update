@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "> Updating distrotunnel..."
+cd $DISTROTUNNEL && git reset --hard -- && git pull --rebase \
+> /tmp/dmt-update-output.txt 2>&1
+echo "> Distrotunnel updated successfully 🎉"
