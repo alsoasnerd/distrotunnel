@@ -1,2 +1,8 @@
 # Ignore distrobox binary export directory
 bin/
+
+# Ignore distrotunnel.zsh file
+distrotunnel.zsh
+
+# Ignore scripts/install
+scripts/install
