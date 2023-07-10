@@ -28,7 +28,7 @@ $DISTROTUNNEL/scripts/dmt/target/release/dmt -a \
         flameshot \
         taskwarrior-tui \
         timew \
-        firefox-developer-edition \
+        vivaldi \
         neovim \
         openssh \
         ripgrep \
