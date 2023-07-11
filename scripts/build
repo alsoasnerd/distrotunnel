@@ -44,5 +44,6 @@ echo "alias distrotunnel=\"distrobox enter distrotunnel -a '--env host=distrobox
 echo "alias distrotunnel_setup=$DISTROTUNNEL/scripts/setup" >> $path/distrotunnel.zsh
 echo "alias distrotunnel_unsetup=$DISTROTUNNEL/scripts/unsetup" >> $path/distrotunnel.zsh
 echo "alias distrotunnel_update=$DISTROTUNNEL/scripts/update" >> $path/distrotunnel.zsh
+echo "complete -C $DISTROTUNNEL/scripts/dmt/target/release/__dmt_shell_completion dmt" >> $path/distrotunnel.zsh
 
 $DISTROTUNNEL/scripts/setup
