@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# !! IMPORTANT !! INCREASE THE LIMIT OF TASKS IN /etc/systemd/system.conf
+echo "# Distrotunnel install script - Increase the limit of tasks" \
+    | sudo tee -a /etc/systemd/system.conf
+echo "DefaultTasksMax=8706" >> sudo /etc/systemd/system.conf \
+    | sudo tee -a /etc/systemd/system.conf
+
 # Install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
