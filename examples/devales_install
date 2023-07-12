@@ -11,29 +11,32 @@ source ~/.zshrc
 git submodule update --init --recursive --remote $DISTROTUNNEL/scripts/dmt
 cargo build --manifest-path $DISTROTUNNEL/scripts/dmt/Cargo.toml --release
 
+# Install atuin
+cargo install atuin
+
 # install AUR/pacman packages
 $DISTROTUNNEL/scripts/dmt/target/release/dmt -a \
-        atuin \
         bat \
         bash-completion \
         chezmoi \
         curl \
         dust \
-        github-cli \
         exa \
         fd \
+        flameshot \
         fzf \
         gitflow-avh \
+        github-cli \
         htop \
-        flameshot \
+        neofetch \
+        neovim \
+        openssh \
+        pulseaudio \
+        ripgrep \
+        starship \
         taskwarrior-tui \
         timew \
         vivaldi \
-        neovim \
-        openssh \
-        ripgrep \
-        starship \
-        neofetch \
         tmux \
         tmuxp \
         xclip \
