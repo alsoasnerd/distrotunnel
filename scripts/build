@@ -39,7 +39,7 @@ else
 fi
 
 echo "$export_distrotunnel" >> $path/distrotunnel.zsh
-echo "export PATH=$DISTROTUNNEL/bin:$PATH" >> $path/distrotunnel.zsh
+echo "export PATH=$PATH:$DISTROTUNNEL/bin" >> $path/distrotunnel.zsh
 echo "alias distrotunnel=\"distrobox enter distrotunnel -a '--env host=distrobox-host-exec'\"" >> $path/distrotunnel.zsh
 echo "alias distrotunnel_setup=$DISTROTUNNEL/scripts/setup" >> $path/distrotunnel.zsh
 echo "alias distrotunnel_unsetup=$DISTROTUNNEL/scripts/unsetup" >> $path/distrotunnel.zsh
