@@ -1,6 +1,24 @@
 #!/bin/bash
 
 echo "> Updating distrotunnel..."
-cd $DISTROTUNNEL && git reset --hard -- && git pull --rebase \
-> /tmp/dmt-update-output.txt 2>&1
-echo "> Distrotunnel updated successfully 🎉"
+cd $DISTROTUNNEL && git reset --hard -- && git pull --rebase --quiet
+if [ $? -ne 0 ]; then
+    echo "> distrotunnel update failed 😢"
+    exit 1
+fi
+echo "> distrotunnel updated successfully 🎉"
+
+cd $DISTROTUNNEL && git submodule update --remote --merge --quiet
+if [ $? -ne 0 ]; then
+    echo "> dmt update failed 😢"
+    cat /tmp/dmt-update-output.txt
+    exit 1
+fi
+echo "> dmt updated successfully 🎉"
+
+echo "> Trying to build dmt..."
+cargo build --manifest-path $DISTROTUNNEL/scripts/dmt/Cargo.toml --release
+if [ $? -ne 0 ]; then
+    echo "> dmt build failed 😢"
+    exit 1
+fi
