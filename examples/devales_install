@@ -3,7 +3,7 @@
 # !! IMPORTANT !! INCREASE THE LIMIT OF TASKS IN /etc/systemd/system.conf
 echo "# Distrotunnel install script - Increase the limit of tasks" \
     | sudo tee -a /etc/systemd/system.conf
-echo "DefaultTasksMax=8706" >> sudo /etc/systemd/system.conf \
+echo "DefaultTasksMax=8706" \
     | sudo tee -a /etc/systemd/system.conf
 
 # Install rust
@@ -21,7 +21,7 @@ cargo build --manifest-path $DISTROTUNNEL/scripts/dmt/Cargo.toml --release
 cargo install atuin
 
 # install AUR/pacman packages
-$DISTROTUNNEL/scripts/dmt/target/release/dmt -i \
+$DISTROTUNNEL/scripts/dmt/target/release/main -i \
         bat \
         bash-completion \
         chezmoi \
@@ -70,5 +70,8 @@ yay -Ql git | grep /usr/bin/ | tail -n +2 | awk '{print $2}' | while read path; 
     distrobox-export -b $path -ep $DISTROTUNNEL/bin;
 done
 
-distrobox-export -b $DISTROTUNNEL/scripts/dmt/target/release/dmt -ep $DISTROTUNNEL/bin 
+# Change the name of the dmt binary
+mv $DISTROTUNNEL/scripts/dmt/target/release/main $DISTROTUNNEL/scripts/dmt/target/release/dmt
+
+distrobox-export -b $DISTROTUNNEL/scripts/dmt/target/release/dmt -ep $DISTROTUNNEL/bin
 distrobox-export -b $DISTROTUNNEL/scripts/won -ep $DISTROTUNNEL/bin 
