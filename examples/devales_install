@@ -21,7 +21,7 @@ cargo build --manifest-path $DISTROTUNNEL/scripts/dmt/Cargo.toml --release
 cargo install atuin
 
 # install AUR/pacman packages
-$DISTROTUNNEL/scripts/dmt/target/release/dmt -a \
+$DISTROTUNNEL/scripts/dmt/target/release/dmt -i \
         bat \
         bash-completion \
         chezmoi \

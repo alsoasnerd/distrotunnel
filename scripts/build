@@ -21,12 +21,12 @@ then
     fi
 
     echo "source $path/distrotunnel.zsh" >> ~/.zshrc
+
+    export_distrotunnel="export DISTROTUNNEL=$path"
+
+    $export_distrotunnel
+    mkdir -p $DISTROTUNNEL
 fi
-
-export_distrotunnel="export DISTROTUNNEL=$path"
-
-$export_distrotunnel
-mkdir -p $DISTROTUNNEL
 
 # verify if DISTROTUNNEL_UNSTABLE is set to true
 clone_command="git clone https://github.com/$username/distrotunnel "
