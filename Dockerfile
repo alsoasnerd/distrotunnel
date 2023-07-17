@@ -1,7 +1,12 @@
 FROM archlinux:latest
 
-# Update the system and install base-devel, git, sudo and go
-RUN pacman -Syu --noconfirm base-devel git sudo go 
+ARG PACMAN_PARALLELDOWNLOADS=16
+RUN pacman-key --init \
+ && pacman-key --populate archlinux \
+ && sed 's/ParallelDownloads = \d+/ParallelDownloads = ${PACMAN_PARALLELDOWNLOADS}/g' -i /etc/pacman.conf
+
+# Update the system and install base, base-devel, git, sudo and go
+RUN pacman -Syu --noconfirm base base-devel git sudo go 
 
 # Create a new non-root user
 RUN useradd -m builduser
@@ -23,4 +28,3 @@ RUN pacman -U --noconfirm /home/builduser/yay/*.pkg.tar.zst
 
 # Delete the builduser user
 RUN userdel -r builduser
-
