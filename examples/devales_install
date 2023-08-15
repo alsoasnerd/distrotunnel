@@ -36,9 +36,11 @@ $DISTROTUNNEL/scripts/dmt/target/release/main -i \
         htop \
         neofetch \
         neovim \
+        obsidian \
         openssh \
         pulseaudio \
         ripgrep \
+        superproductivity-bin \
         starship \
         taskwarrior-tui \
         timew \
